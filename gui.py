@@ -5,6 +5,9 @@ import cv2
 
 def detect_drowsiness():
     face_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
+    if face_cascade.empty():
+        print("Error: Cascade Classifier not loaded!")
+        return
     EMOTIONS_LIST = ["Open eye", "Closed eye: Drowsiness"]
     video_capture = cv2.VideoCapture(0)
 
@@ -67,28 +70,6 @@ def detect_drowsiness():
     video_capture.release()
     cv2.destroyAllWindows()
 
-# def is_eye_open(eye_image):
-#     # Convert the input image to grayscale if it's not already in grayscale
-#     if len(eye_image.shape) > 2:
-#         gray_eye = cv2.cvtColor(eye_image, cv2.COLOR_BGR2GRAY)
-#     else:
-#         gray_eye = eye_image
-    
-#     # Apply Gaussian blur to reduce noise
-#     blurred_eye = cv2.GaussianBlur(gray_eye, (5, 5), 0)
-    
-#     # Apply adaptive thresholding to binarize the image
-#     _, thresh_eye = cv2.threshold(blurred_eye, 50, 255, cv2.THRESH_BINARY_INV)
-    
-#     # Find contours in the thresholded image
-#     contours, _ = cv2.findContours(thresh_eye, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    
-#     # If no contours are found, consider the eye closed
-#     if len(contours) == 0:
-#         return False
-    
-#     # Otherwise, consider the eye open
-#     return True
 
 def is_eye_open(eye_image):
     # Convert the input image to grayscale if it's not already in grayscale
